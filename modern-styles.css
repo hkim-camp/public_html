@@ -1,10 +1,11 @@
 :root {
     --primary-color: #ffa600;
-    --light-background: #f8f9fa;
-    --element-background: #ffffff;
+    --light-background: #f0f0f0;
+    --element-background: #f0f0f0;
     --text-color: #333333;
     --text-on-primary: #ffffff;
-    --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --neumorphic-shadow: 9px 9px 25px #dadada, -9px -9px 25px #ffffff;
+    --neumorphic-shadow-inset: inset 9px 9px 25px #dadada, inset -9px -9px 25px #ffffff;
     --border-radius: 50px;
     --spacing: 25px;
 }
@@ -43,7 +44,8 @@ div#tswcontainer {
 .main-nav {
     background-color: var(--element-background);
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    /* Navbar is always outset */
+    box-shadow: var(--neumorphic-shadow);
     padding: 15px var(--spacing);
     margin-bottom: calc(var(--spacing) * 2);
     position: sticky;
@@ -94,6 +96,34 @@ div#tswcontainer {
     left: 0;
 }
 
+.color-switcher {
+    position: absolute;
+    top: 50%;
+    right: var(--spacing);
+    transform: translateY(-50%);
+    display: flex;
+    gap: 15px;
+}
+
+.color-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 3px solid white;
+    cursor: pointer;
+    box-shadow: var(--neumorphic-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 12px 12px 28px #afafaf, -12px -12px 28px #ffffff;
+}
+
+#random-color-btn {
+    background: conic-gradient(hsl(360, 100%, 50%), hsl(315, 100%, 50%), hsl(270, 100%, 50%), hsl(225, 100%, 50%), hsl(180, 100%, 50%), hsl(135, 100%, 50%), hsl(90, 100%, 50%), hsl(45, 100%, 50%), hsl(0, 100%, 50%));
+}
+
 .main-title {
     font-size: 4rem;
     text-align: center;
@@ -110,18 +140,24 @@ div#tswcontainer {
 }
 
 .content-card {
+    /* Set initial border color to match background, making it invisible */
     --border-color: var(--element-background);
     background: linear-gradient(var(--element-background), var(--element-background)) padding-box, linear-gradient(var(--angle), var(--element-background), var(--border-color)) border-box;
     border: 3px solid transparent;
     text-align: center;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    /* Cards are inset by default */
+    box-shadow: var(--neumorphic-shadow);
     padding: 10px;
-    transition: --border-color 0.5s ease-in-out;
+    /* Transition both the shadow and the border color */
+    transition: box-shadow 0.4s ease-in-out, --border-color 0.4s ease-in-out;
 }
 
 .content-card:hover {
+    /* On hover, reveal the primary color in the border */
     --border-color: var(--primary-color);
+    /* On hover, make the card outset */
+    box-shadow: var(--neumorphic-shadow-inset);
     animation: 8s rotate linear infinite;
 }
 
@@ -139,7 +175,7 @@ div#tswcontainer {
 
 @property --border-color {
     syntax: "<color>";
-    initial-value: #ffffff;
+    initial-value: #f0f0f0;
     inherits: false;
 }
 
