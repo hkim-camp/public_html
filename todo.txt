@@ -1,0 +1,5 @@
+#TODO
+
+1. color swatch in css
+2. last one cycle colors
+3. neumorphism on color swatches
