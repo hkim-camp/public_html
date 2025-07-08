@@ -1,0 +1,221 @@
+/*
+	modern-styles.css
+	A modern redesign focusing on a navbar and card-based layout.
+*/
+
+/* --- Root Variables for Easy Theming --- */
+:root {
+    --primary-blue: #007bff;
+    --light-background: #f8f9fa;
+    --element-background: #ffffff;
+    --text-color: #333333;
+    --text-on-primary: #ffffff;
+    --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --border-radius: 50px;
+    --spacing: 25px;
+}
+
+/* --- Base & Body Styles --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: var(--light-background);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing);
+    /* Add space around the entire page */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+input,
+select,
+button,
+textarea,
+meter,
+progress,
+output {
+    max-width: 100%;
+}
+
+/* --- Main Container --- */
+div#tswcontainer {
+    max-width: 1400px;
+    /* Give it a max width for large screens */
+    margin: 0 auto;
+    /* Center the container */
+}
+
+/* --- Navigation Bar --- */
+.main-nav {
+    background-color: var(--element-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 15px var(--spacing);
+    margin-bottom: calc(var(--spacing) * 2);
+    position: sticky;
+    /* Makes the navbar stick to the top on scroll */
+    top: var(--spacing);
+    z-index: 1000;
+}
+
+.main-nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.main-nav a {
+    position: relative;
+    /* Needed for the animated underline */
+    padding: 15px 5px;
+    padding-bottom: 10px;
+    /* Creates space for the underline */
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+/* The animated underline pseudo-element */
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-blue);
+    transition: width 0.3s ease-in-out;
+}
+
+.main-nav a:hover,
+.main-nav a:focus,
+.main-nav a.active {
+    color: var(--primary-blue);
+    /* Highlight active/hovered link text */
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    width: 100%;
+    /* Animate the underline to full width */
+}
+
+/* --- Main Title Styling Options --- */
+.main-title {
+    /* Option 1: Clean, Centered & Bold (Active by default) */
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: calc(var(--spacing) * 2);
+    color: var(--text-color);
+
+    /* Option 2: Blue, Left-aligned with an underline */
+    /*
+	font-size: 3.5rem;
+	text-align: left;
+	color: var(--primary-blue);
+	border-bottom: 4px solid var(--primary-blue);
+	padding-bottom: 10px;
+	margin-bottom: calc(var(--spacing) * 2);
+	*/
+
+    /* Option 3: Gradient Text */
+    /*
+	font-size: 5rem;
+	text-align: center;
+	margin-bottom: calc(var(--spacing) * 2);
+	background: linear-gradient(45deg, #007bff, #00c6ff);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	*/
+}
+
+/* --- Content Grid & Cards --- */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing);
+}
+
+.content-card {
+    /* background: var(--element-background); */
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 40px;
+
+    border: 3px solid #0000;
+    background: linear-gradient(var(--element-background), var(--element-background)) padding-box, linear-gradient(var(--angle),
+            var(--element-background),
+            #687aff) border-box;
+    animation: 8s rotate linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        --angle: 360deg;
+    }
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+/* --- Icon List Styling --- */
+
+.content-card li,
+.icon-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.content-card li i,
+.icon-heading i {
+    font-size: 1.6rem;
+    color: var(--primary-blue);
+    flex-shrink: 0;
+    /* Prevents icon from shrinking if text is long */
+    width: 25px;
+    /* Gives icons a consistent space */
+}
+
+/* --- Responsive Design --- */
+@media only screen and (max-width: 629px) {
+    :root {
+        --border-radius: 30px;
+        /* Slightly smaller rounding on small screens */
+    }
+
+    body {
+        padding: 15px;
+    }
+
+    .main-nav {
+        padding: 10px;
+        top: 15px;
+    }
+
+    .main-nav a {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    .content-card {
+        padding: 25px;
+    }
+}
