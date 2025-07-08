@@ -1,5 +1,5 @@
 :root {
-    --primary-blue: #007bff;
+    --primary-color: #ffa600;
     --light-background: #f8f9fa;
     --element-background: #ffffff;
     --text-color: #333333;
@@ -78,14 +78,14 @@ div#tswcontainer {
     height: 3px;
     bottom: 0;
     left: 50%;
-    background-color: var(--primary-blue);
+    background-color: var(--primary-color);
     transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
 }
 
 .main-nav a:hover,
 .main-nav a:focus,
 .main-nav a.active {
-    color: var(--primary-blue);
+    color: var(--primary-color);
 }
 
 .main-nav a:hover::after,
@@ -110,16 +110,18 @@ div#tswcontainer {
 }
 
 .content-card {
-    background: var(--element-background);
+    --border-color: var(--element-background);
+    background: linear-gradient(var(--element-background), var(--element-background)) padding-box, linear-gradient(var(--angle), var(--element-background), var(--border-color)) border-box;
+    border: 3px solid transparent;
+    text-align: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    padding: 40px;
-    border: 3px solid transparent;
-    /* Reserve space for border to prevent layout shift */
+    padding: 10px;
+    transition: --border-color 0.5s ease-in-out;
 }
 
 .content-card:hover {
-    background: linear-gradient(var(--element-background), var(--element-background)) padding-box, linear-gradient(var(--angle), var(--element-background), #687aff) border-box;
+    --border-color: var(--primary-color);
     animation: 8s rotate linear infinite;
 }
 
@@ -135,21 +137,25 @@ div#tswcontainer {
     inherits: false;
 }
 
+@property --border-color {
+    syntax: "<color>";
+    initial-value: #ffffff;
+    inherits: false;
+}
+
 /* --- Icon List Styling --- */
 
-.content-card li,
-.icon-heading {
+.content-card li {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 15px;
+    padding: 10px;
     font-size: 1.1rem;
 }
 
-.content-card li i,
-.icon-heading i {
+.content-card li i {
     font-size: 1.6rem;
-    color: var(--primary-blue);
+    color: var(--primary-color);
     flex-shrink: 0;
     /* Prevents icon from shrinking if text is long */
     width: 25px;
