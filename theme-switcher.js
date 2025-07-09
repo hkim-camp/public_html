@@ -1,14 +1,22 @@
 /**
- * Handles changing and persisting the primary theme color using localStorage.
+ * Handles changing and persisting the theme (color and style) using localStorage.
  */
 document.addEventListener('DOMContentLoaded', () => {
-    // Select all buttons with the .color-btn class
+    // --- Element Selectors ---
     const colorButtons = document.querySelectorAll('.color-btn');
-    // Get the root element (where the CSS variables live)
     const root = document.documentElement;
-    const storageKey = 'primaryThemeColor';
+    const styleToggle = document.getElementById('style-toggle');
+    const defaultSheet = document.getElementById('default-stylesheet');
+    const glassSheet = document.getElementById('glass-stylesheet');
+
+    // --- Storage Keys ---
+    const colorStorageKey = 'primaryThemeColor';
+    const styleStorageKey = 'selectedStylesheet';
+
+    // --- State ---
     let randomColorInterval = null; // To hold the interval ID
 
+    // --- Color Functions ---
     // Function to apply a color to the theme
     const applyColor = (color) => {
         root.style.setProperty('--primary-color', color);
@@ -33,8 +41,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 50); // Update every 0.1 seconds
     };
 
-    // On page load, check for a saved color in localStorage
-    const savedColor = localStorage.getItem(storageKey);
+    // --- Stylesheet Functions ---
+    const setStylesheet = (styleName) => {
+        // Disable both first to prevent style clashes
+        defaultSheet.disabled = true;
+        glassSheet.disabled = true;
+
+        if (styleName === 'glass') {
+            glassSheet.disabled = false;
+            styleToggle.checked = true;
+        } else { // 'default'
+            defaultSheet.disabled = false;
+            styleToggle.checked = false;
+        }
+        localStorage.setItem(styleStorageKey, styleName);
+    };
+
+    // --- On Page Load ---
+    // 1. Set the stylesheet based on saved preference (or default to 'glass')
+    const savedStyle = localStorage.getItem(styleStorageKey);
+    setStylesheet(savedStyle || 'glass');
+
+    // 2. Set the color based on saved preference
+    const savedColor = localStorage.getItem(colorStorageKey);
     if (savedColor) {
         if (savedColor === 'random') {
             startRandomAnimation();
@@ -43,6 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- Event Listeners ---
+    // Listener for the style toggle switch
+    styleToggle.addEventListener('change', () => {
+        setStylesheet(styleToggle.checked ? 'glass' : 'default');
+    });
+
+    // Listeners for the color buttons
     colorButtons.forEach(button => {
         button.addEventListener('click', () => {
             const colorValue = button.dataset.color;
@@ -50,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (colorValue === 'random') {
                 startRandomAnimation();
-                localStorage.setItem(storageKey, 'random');
+                localStorage.setItem(colorStorageKey, 'random');
             } else {
                 const newColor = `var(--${colorValue})`;
                 applyColor(newColor);
-                localStorage.setItem(storageKey, newColor);
+                localStorage.setItem(colorStorageKey, newColor);
             }
         });
     });

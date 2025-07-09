@@ -1,0 +1,157 @@
+/**
+ * Glassmorphism Stylesheet
+ *
+ * This stylesheet provides a reusable .glass class for creating a "frosted glass" effect.
+ * It's designed to work with the theme-switcher.js script by using the --primary-color variable.
+ */
+
+/* 1. Define root variables and basic body styles */
+:root {
+    /* Default theme color, will be overridden by JS */
+    --primary-color: #009688;
+    /* A nice teal as a fallback */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    min-height: 100vh;
+    /* A background is essential to see the blur effect. Using a vibrant gradient. */
+    background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+    background-attachment: fixed;
+    /* Keeps the background static during scroll */
+
+    /* For demonstration: center content */
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+}
+
+/* 2. The reusable .glass class for the glassmorphism effect */
+.glass {
+    /* The key to the effect: a semi-transparent background and a backdrop-filter */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari support */
+
+    /* A soft shadow to lift the element from the background */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+
+    /* A subtle border to define the edges and give a slight sheen */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.3);
+    border-left-color: rgba(255, 255, 255, 0.3);
+
+    /* Rounded corners for a softer look */
+    border-radius: 1rem;
+}
+
+/* 3. Example usage on a card element */
+.card {
+    padding: 2rem 2.5rem;
+    color: white;
+    max-width: 500px;
+    text-align: center;
+}
+
+.card h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    /* Use the primary color from the theme switcher for the heading */
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: color 0.3s ease;
+    /* Smooth color transition */
+}
+
+.card p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #f0f0f0;
+}
+
+/* 4. Styling for the color buttons from the context */
+.color-switcher {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    /* Apply the glass effect to the switcher container itself! */
+}
+
+.color-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.color-btn:hover {
+    transform: scale(1.15);
+}
+
+/* 5. Navbar and Style Switcher Toggle */
+nav {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    /* Apply the glass effect to the switcher container itself! */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    z-index: 1000;
+    /* The .glass class should be applied to the nav in HTML */
+}
+
+.style-switcher {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.toggle-label {
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 50px;
+    height: 28px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-switch::before {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: white;
+    top: 3px;
+    left: 4px;
+    transition: transform 0.3s ease;
+}
