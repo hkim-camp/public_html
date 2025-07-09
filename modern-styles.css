@@ -1,10 +1,10 @@
 :root {
     --primary-color: #ffa600;
     --background: #f0f0f0;
-    --text-color: #333333;
+    --text-color: #1b1b1b;
     --text-on-primary: #ffffff;
-    --neumorphic-shadow: 9px 9px 25px #dadada, -9px -9px 25px #ffffff;
-    --neumorphic-shadow-inset: inset 9px 9px 25px #dadada, inset -9px -9px 25px #ffffff;
+    --neumorphic-shadow: 5px 5px 8px #c7c7c7, -5px -5px 8px #ffffff;
+    --neumorphic-shadow-inset: inset 5px 5px 8px #c7c7c7, inset -5px -5px 8px #ffffff;
     --border-radius: 50px;
     --spacing: 25px;
     --color-1: #ff9100;
