@@ -7,33 +7,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get the root element (where the CSS variables live)
     const root = document.documentElement;
     const storageKey = 'primaryThemeColor';
+    let randomColorInterval = null; // To hold the interval ID
 
     // Function to apply a color to the theme
     const applyColor = (color) => {
         root.style.setProperty('--primary-color', color);
     };
 
+    // Function to stop any ongoing color animation
+    const stopRandomAnimation = () => {
+        if (randomColorInterval) {
+            clearInterval(randomColorInterval);
+            randomColorInterval = null;
+        }
+    };
+
+    // Function to start the random color animation, cycling through hues
+    const startRandomAnimation = () => {
+        stopRandomAnimation(); // Ensure no other interval is running
+        let hue = Math.floor(Math.random() * 360); // Start at a random hue
+        randomColorInterval = setInterval(() => {
+            hue = (hue + 1) % 360; // Cycle through hues
+            const newColor = `hsl(${hue}, 100%, 50%)`;
+            applyColor(newColor);
+        }, 50); // Update every 0.1 seconds
+    };
+
     // On page load, check for a saved color in localStorage
     const savedColor = localStorage.getItem(storageKey);
     if (savedColor) {
-        applyColor(savedColor);
+        if (savedColor === 'random') {
+            startRandomAnimation();
+        } else {
+            applyColor(savedColor);
+        }
     }
 
     colorButtons.forEach(button => {
         button.addEventListener('click', () => {
             const colorValue = button.dataset.color;
-            let newColor;
+            stopRandomAnimation(); // Stop any previous animation
 
             if (colorValue === 'random') {
-                // Generate a random hue between 0 and 360
-                const randomHue = Math.floor(Math.random() * 361);
-                newColor = `hsl(${randomHue}, 100%, 50%)`;
+                startRandomAnimation();
+                localStorage.setItem(storageKey, 'random');
             } else {
-                // For any other button, use its data-color value
-                newColor = colorValue;
+                const newColor = `var(--${colorValue})`;
+                applyColor(newColor);
+                localStorage.setItem(storageKey, newColor);
             }
-            applyColor(newColor);
-            localStorage.setItem(storageKey, newColor);
         });
     });
 });
