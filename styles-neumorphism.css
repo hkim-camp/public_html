@@ -218,6 +218,11 @@ div#tswcontainer {
     /* Gives icons a consistent space */
 }
 
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
 /* --- Responsive Design --- */
 @media only screen and (max-width: 629px) {
     :root {
